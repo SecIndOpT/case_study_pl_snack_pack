@@ -32,6 +32,7 @@ We have different general concepts which describe how to equip an EE with certif
 The different approaches collected by the authors can be summarized to employing one of the following three entity reference architectures:
 
 ![Figure 6 from the original paper](./architectures.png)
+*Figure taken from Goeppert et al. (2024)*
 
 1. We have a direct connection between field devices and the managing entity. This implies that both the EE and the managing entity provide common protocol mechanisms to manage certificates. Additionally, the managing entity must be able to issue trust anchors and certificates hence incorporating the functionallity of a CA. The managing entity can also be subdivided, for example into a CA that issues certifcates, a registration authority (RA) that verifies certificate management requests and a validation authority (VA) that validates certificates.
 
