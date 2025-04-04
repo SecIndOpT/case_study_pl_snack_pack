@@ -111,9 +111,42 @@ The most employed strategy is using certificate revocation lists (CRL) in combin
 
 ## Involvement of Different Stakeholders
 
+We have two main stakeholders involved in the certificate management process: Manufacturers and operators. General idea is again that both need to maintain their own PKIs for the following reasons:
+
+If we have manufacturer certificate on the device, we get
+
+- Secure initial authentication before we ship certificates, trust anchors and keys to device.
+- Protection against product privacy
+
+Alternatively, we can have self-signed certificates which makes the manufacturer PKI obsolete. However, self-signed certificates can easily be spoofed, as the attack can generate the certificate himself.
+
+The operator needs a PKI in order to
+
+- Issue operator-specific certificates, used to enforce trust relations and access control
+- Can generate signed *tickets* describing the equipment when transfering the device. These tickets can be used to verify the origin of a device. Can of course also be employed by the manufacturer.
+
+We want to point out that BRSKI utilizes these ideas to provide high initialization security: New devices come with an IDevID, installed during manufacturing. The owner can then get identified in advance (in strongest mode only). When the device gets initialized by the operator, the control over the device gets transfered from manufacturer to device owner. Resale is possible if the manufacturer authorizes it. We want to point out that this approach, while providing high initialization security, also establishes a strong dependency on the manufacturer.
+
+Lastly, none of the investigated standards have a mechanism which allows the device to authenticate the network they are connecting to. All mechanisms are based on *Trust on First Use* (TOFU).
+
 ## Product Life Cycle Stages
 
+### Manufacturing
 
+- Utilization of manufacturer-issued and imprinted certificates to authenticate the device
+- Authenticating party needs to possess the trust anchor of the manufacturer's certificate
+
+### Onboarding
+
+This stage starts with a device in its factory default state and ends when the device is equipped with all necessary cryptographic artefacts from the operator's domain. The paper describes different ways on how to utilize the imprinted or self-signed certificate to initially authorize the device when connecting it to the network. Verififaction and registration of the devices identity is based on these vendor certificates, followed by supplying the device with the owner certificates, private keys and trust anchors. The methods on how to equip the EE with these cryptographic artifacts have already been discussed above.
+
+### Operation
+
+The operational phase mainly is concerned with renewal of cryptographic artifacts. As mentioned before, the methods on how to do so have already been discussed. 
+
+### Decommissioning
+
+During decommissioning, the goal is to remove all these cryptographic artifacts in order to dispose, discard or sell the device. Here, the general notion is that when resetting a device to factory settings, we remove these artifacts. However, we might have different "hardnesses" of reset, meaning that we for example keep the trust anchors or the manufacturer certificates when resetting.
 
 
 
