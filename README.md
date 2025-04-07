@@ -3,7 +3,7 @@
 Reference: Goeppert J., Walz A., Sikora A. (2024) A Survey on Life-Cycle-Oriented Certificate Management in Industrial Networking Environments. *J. Sens. Actuator Netw. 13*(2), 26. [https://doi.org/10.3390/jsan13020026](https://doi.org/10.3390/jsan13020026)
 
 
-In the past, OT and IT were strictly separated through hierarchical gateways. With the increasing demand for connectivity, the convergence of OT and IT is inevitable. This on one hand leads to an adoption of common Internet standards in OT networks but also to an increased attack surface OT networks are facing nowadays. A security measure to counteract these new threats is a *defense-in-depth* approach, which includes the need for cryptographic protection of industrial communications and devices. More precise, we need a way to guarantee integrity and authenticity of field devices, which leads to the requirements of certificates, a certificate-based mutually authenticated key agreement procedure, private keys and trust anchors in and for industrial end devices as well as secure management of these assets. The paper collects and elaborates different employed and proposed solutions stemming from reasearch, industrial protocols and protocols which stem from the IT-domain but find application in OT.
+In the past, OT and IT were strictly separated through hierarchical gateways. With the increasing demand for connectivity, the convergence of OT and IT is inevitable. This on one hand leads to an adoption of common Internet standards in OT networks but also to an increased attack surface OT networks are facing nowadays. A security measure to counteract these new threats is a *defense-in-depth* approach, which includes the need for cryptographic protection of industrial communications and devices. More precise, we need a way to guarantee integrity and authenticity of field devices, which leads to the requirements of certificates, a certificate-based mutually authenticated key agreement procedure, private keys and trust anchors in and for industrial end devices as well as secure management of these assets. The paper collects and elaborates different employed and proposed solutions stemming from research, industrial protocols and protocols which stem from the IT-domain but find application in OT.
 
 Some nomenclature:
 
@@ -34,9 +34,9 @@ The different approaches collected by the authors can be summarized to employing
 ![Figure 6 from the original paper](./architectures.png)
 *Figure taken from Goeppert et al. (2024)*
 
-1. We have a direct connection between field devices and the managing entity. This implies that both the EE and the managing entity provide common protocol mechanisms to manage certificates. Additionally, the managing entity must be able to issue trust anchors and certificates hence incorporating the functionallity of a CA. The managing entity can also be subdivided, for example into a CA that issues certifcates, a registration authority (RA) that verifies certificate management requests and a validation authority (VA) that validates certificates.
+1. We have a direct connection between field devices and the managing entity. This implies that both the EE and the managing entity provide common protocol mechanisms to manage certificates. Additionally, the managing entity must be able to issue trust anchors and certificates hence incorporating the functionality of a CA. The managing entity can also be subdivided, for example into a CA that issues certificates, a registration authority (RA) that verifies certificate management requests and a validation authority (VA) that validates certificates.
 
-1. The second architecture involves and intermediary entity which acts as the direct communication partner for the EEs. For example, it can translate between protocols or execute required certificate management tasks like generating key pairs or imprinting signed certificates. With an architecture like this, the CA can be embedded into further security infrastructure, which might also contain an RA and/or VA. Furthermore, the CA and EE loose the need to implement a common protocol. Notice that the CMOs or SIHs mentioned before could fullfil the role of such intermediary entities.
+1. The second architecture involves and intermediary entity which acts as the direct communication partner for the EEs. For example, it can translate between protocols or execute required certificate management tasks like generating key pairs or imprinting signed certificates. With an architecture like this, the CA can be embedded into further security infrastructure, which might also contain an RA and/or VA. Furthermore, the CA and EE lose the need to implement a common protocol. Notice that the CMOs or SIHs mentioned before could fulfill the role of such intermediary entities.
 
 1. The last architecture is cluster-based and uses blockchains. Multiple EEs dynamically form a cluster with one cluster head. The cluster heads act as CAs that participate in the blockchain network which shares information about the member nodes' behaviour. This member behaviour defines, whether or not a certificate gets issued. Alternatively, the EEs could also employ self-signed certificates and let local RAs validate the identity binding through the Ethereum blockchain, using it as a global notary of certificates.
 
@@ -50,7 +50,7 @@ Almost all approaches utilize certificates as trust anchors. To implant the root
 
 - Equipping the EE with a root certificate as part of the security setup when booting from factory default state.
 
-- Maintaining a list of trusted (CA) certificates on the intermediary entitiy (architecture 2 from before).
+- Maintaining a list of trusted (CA) certificates on the intermediary entity (architecture 2 from before).
 
 - Equip the EE during initialization with a copy of the relevant root CA public keys by out-of-band means.
 
@@ -60,9 +60,9 @@ Almost all approaches utilize certificates as trust anchors. To implant the root
 
 In order to issue a certificate to a field device, it needs to have a public key which gets cryptographically bound to the identity information of the certificate. Hence, before issuing any certificate, we need to generate an asymmetric key pair. There are two ways of doing so:
 
-- Internal generation and storage of key pair by the end entitiy, followed by sending a certificate signing request containing the public key to managing entity. The managing entity then returns a signed certificate to the EE.
+- Internal generation and storage of key pair by the end entity, followed by sending a certificate signing request containing the public key to managing entity. The managing entity then returns a signed certificate to the EE.
 
-- External entitity generates the key pair and sends it to EE, which stores and uses it.
+- External entity generates the key pair and sends it to EE, which stores and uses it.
 
 ### Equipment with Certificates
 
@@ -94,7 +94,7 @@ The ideas on how to renew the certificate are what one would expect. Some approa
 
 ### Removal of Certificate
 
-A dedicated function to remove cryptographic artifacts from to be decomissioned device is of course necessary. However, in academia and in IT-domain based protocols, nearly no word is lost about it. In contrast to this, all industrial standards provide mechanisms to remove certificates, keys and trust anchors.
+A dedicated function to remove cryptographic artifacts from to be decommissioned device is of course necessary. However, in academia and in IT-domain based protocols, nearly no word is lost about it. In contrast to this, all industrial standards provide mechanisms to remove certificates, keys and trust anchors.
 
 ### Revocation of Certificates
 
@@ -123,9 +123,9 @@ Alternatively, we can have self-signed certificates which makes the manufacturer
 The operator needs a PKI in order to
 
 - Issue operator-specific certificates, used to enforce trust relations and access control
-- Can generate signed *tickets* describing the equipment when transfering the device. These tickets can be used to verify the origin of a device. Can of course also be employed by the manufacturer.
+- Can generate signed *tickets* describing the equipment when transferring the device. These tickets can be used to verify the origin of a device. Can of course also be employed by the manufacturer.
 
-We want to point out that BRSKI utilizes these ideas to provide high initialization security: New devices come with an IDevID, installed during manufacturing. The owner can then get identified in advance (in strongest mode only). When the device gets initialized by the operator, the control over the device gets transfered from manufacturer to device owner. Resale is possible if the manufacturer authorizes it. We want to point out that this approach, while providing high initialization security, also establishes a strong dependency on the manufacturer.
+We want to point out that BRSKI utilizes these ideas to provide high initialization security: New devices come with an IDevID, installed during manufacturing. The owner can then get identified in advance (in strongest mode only). When the device gets initialized by the operator, the control over the device gets transferred from manufacturer to device owner. Resale is possible if the manufacturer authorizes it. We want to point out that this approach, while providing high initialization security, also establishes a strong dependency on the manufacturer.
 
 Lastly, none of the investigated standards have a mechanism which allows the device to authenticate the network they are connecting to. All mechanisms are based on *Trust on First Use* (TOFU).
 
@@ -138,7 +138,7 @@ Lastly, none of the investigated standards have a mechanism which allows the dev
 
 ### Onboarding
 
-This stage starts with a device in its factory default state and ends when the device is equipped with all necessary cryptographic artefacts from the operator's domain. The paper describes different ways on how to utilize the imprinted or self-signed certificate to initially authorize the device when connecting it to the network. Verififaction and registration of the devices identity is based on these vendor certificates, followed by supplying the device with the owner certificates, private keys and trust anchors. The methods on how to equip the EE with these cryptographic artifacts have already been discussed above.
+This stage starts with a device in its factory default state and ends when the device is equipped with all necessary cryptographic artefacts from the operator's domain. The paper describes different ways on how to utilize the imprinted or self-signed certificate to initially authorize the device when connecting it to the network. Verification and registration of the devices identity is based on these vendor certificates, followed by supplying the device with the owner certificates, private keys and trust anchors. The methods on how to equip the EE with these cryptographic artifacts have already been discussed above.
 
 ### Operation
 
@@ -148,8 +148,10 @@ The operational phase mainly is concerned with renewal of cryptographic artifact
 
 During decommissioning, the goal is to remove all these cryptographic artifacts in order to dispose, discard or sell the device. Here, the general notion is that when resetting a device to factory settings, we remove these artifacts. However, we might have different "hardnesses" of reset, meaning that we for example keep the trust anchors or the manufacturer certificates when resetting.
 
+## Improvements Needed in OT: Key Gaps to Address
+- Need for a Unified Life-Cycle Framework: There is no overarching model that generically describes certificate management for industrial devices across all lifecycle stages.
+- Applicability to New Protocols: To validate the above framework, it should be possible to apply it to an industrial communication technology that currently lacks certificate management, demonstrating its feasibility and promoting drive adoption of certificate-based authentication in areas that relies on weaker methods.
+- Revocation Mechanisms for Resource-Constrained Systems: One of the major open challenges is how to perform certificate revocation in industrial scenarios, current standards leave the revocation unaddressed.
+- Operational Usability and Automation: Today’s certificate management solutions require an high degree of manual effort and understanding of PKI concepts from owners/operators, this can be overwhelming and prone to error. Simplifying these systems would help increase adoption of strong authentication in Industry 4.0 systems, for example by implementing user-friendly interfaces to perform these operations.
 
-
-
-
- 
+Addressing these gaps can facilitate more seamless and secure use of certificates in industrial networks.
